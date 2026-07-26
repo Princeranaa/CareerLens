@@ -1,8 +1,12 @@
-import { Register } from "@/types/user.types";
-import mongoose from "mongoose";
+import { Iuser } from "@/types/user.types";
+import mongoose, { Document } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema<Register>({
+interface UserDocument extends Omit<Iuser, "_id">, Document {
+  comparePass(candidatePassword: string): boolean;
+}
+
+const userSchema = new mongoose.Schema<UserDocument>({
   name: {
     type: String,
     required: true,
@@ -28,8 +32,9 @@ userSchema.pre("save", function (): void {
   this.password = bcrypt.hashSync(this.password, 10);
 });
 
-userSchema.methods.comparePassword = function (candidatePassword: string) {
+userSchema.methods.comparePass = function (candidatePassword: string) {
   return bcrypt.compareSync(candidatePassword, this.password);
 };
 
-module.exports = mongoose.model("User", userSchema);
+export const UserModel =
+  mongoose.models.User || mongoose.model<UserDocument>("User", userSchema);
