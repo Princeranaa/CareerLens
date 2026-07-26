@@ -39,6 +39,15 @@ const resumeSchema = new mongoose.Schema<IResume>(
       ],
       default: [],
     },
+    eduction: {
+      type: [
+        {
+          institute: String,
+          degree: String,
+        },
+      ],
+      default: [],
+    },
     projects: {
       type: [
         {
@@ -64,4 +73,5 @@ const resumeSchema = new mongoose.Schema<IResume>(
   { timestamps: true },
 );
 
-export const ResumeModel = mongoose.model("resume", resumeSchema);
+export const ResumeModel =
+  mongoose.models.resume || mongoose.model("resume", resumeSchema);
