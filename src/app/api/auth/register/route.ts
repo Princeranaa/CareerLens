@@ -68,12 +68,13 @@ export async function POST(req: NextRequest) {
       maxAge: 60 * 60 * 100,
     });
     return response;
-
   } catch (error) {
-    console.log("error", error);
-    return NextResponse.json({
-        sucess:false,
-        message:"Internal Server Error", error
-    },{status:500})
+    return NextResponse.json<ApiResponse>(
+      {
+        success: false,
+        message: "Internal Server Error",
+      },
+      { status: 500 },
+    );
   }
 }
