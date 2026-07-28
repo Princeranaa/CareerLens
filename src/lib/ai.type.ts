@@ -18,8 +18,13 @@ export interface GenerateProject {
 export interface GenerateExperience {
   experienceLevel: string;
   techStack: string[];
-  jobRole:string
+  jobRole: string;
   YearsOfExperience: number;
 }
 
-
+export interface ImproveContent {
+  content: string;
+}
+export interface ImproveContent {
+  content: string;
+}
