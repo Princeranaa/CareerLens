@@ -1,12 +1,12 @@
-import { Generatsummary } from "@/lib/ai.type";
+import { GenerateSkills, Generatsummary } from "@/lib/ai.type";
 import { generateAiContent } from "@/lib/gemini";
 import { ApiResponse } from "@/types/api.types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
-    const body: Generatsummary = await req.json();
-    const { experienceLevel, skills, jobtitle } = body;
+    const body: GenerateSkills = await req.json();
+    const { experienceLevel, jobtitle } = body;
 
     if (!experienceLevel || !jobtitle) {
       return NextResponse.json<ApiResponse>(
