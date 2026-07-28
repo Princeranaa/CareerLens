@@ -69,6 +69,7 @@ export async function POST(req: NextRequest) {
     });
     return response;
   } catch (error) {
+    console.log("error", error)
     return NextResponse.json<ApiResponse>(
       {
         success: false,
