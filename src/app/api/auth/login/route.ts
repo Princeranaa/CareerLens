@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     const token = genrateToken({ userId: User._id.toString() });
 
-    return NextResponse.json<ApiResponse>(
+    let response = NextResponse.json<ApiResponse>(
       {
         success: true,
         message: "Login successful",
@@ -60,6 +60,13 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 },
     );
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 100,
+    });
+    return response;
   } catch (error) {
     console.log("error", error);
     return NextResponse.json(
