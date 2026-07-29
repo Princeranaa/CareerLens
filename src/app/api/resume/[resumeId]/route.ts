@@ -58,7 +58,7 @@ export async function PATCH(
     const body = await req.json();
     const { resumeId } = await params;
 
-    const updatedResume = await ResumeModel.findOneAndUpdate(
+    const updatedResume = await ResumeModel.findByIdAndUpdate(
       {
         _id: resumeId,
         user_id: user.userId,

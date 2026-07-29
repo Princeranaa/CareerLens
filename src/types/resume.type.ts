@@ -41,8 +41,8 @@ export interface IResume {
   workExperience?: IworkExperience[];
   projects: Iprojects[];
   skills: string[];
-  eduction: IEducation[];
+  education: IEducation[];
   certifications?: string[];
-  createdAt?:Date;
+  createdAt?: Date;
   updatedAt?: Date;
 }

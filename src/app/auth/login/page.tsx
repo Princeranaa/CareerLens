@@ -23,7 +23,6 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       await loginApi(data);
-
       router.push("/resume");
     } catch (error: any) {
       alert(error?.response?.data?.message || "Login failed");

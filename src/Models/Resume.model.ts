@@ -39,11 +39,13 @@ const resumeSchema = new mongoose.Schema<IResume>(
       ],
       default: [],
     },
-    eduction: {
+    education: {
       type: [
         {
           institute: String,
           degree: String,
+          startDate: String,
+          endDate: String,
         },
       ],
       default: [],
