@@ -35,7 +35,7 @@ export const generateExperienceApi = async (payload: {
   yearsOfExperience?: number;
 }) => {
   const response = await axios.post("/api/ai/generate-experience", payload);
-
+  console.log("responseeeeeeee", response.data)
   return response.data;
 };
 

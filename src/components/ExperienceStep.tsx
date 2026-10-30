@@ -77,25 +77,64 @@ export default function ExperienceStep({ resumeId, onNext, onBack }: Props) {
     }
   };
 
+  // const generateDescription = async (index: number) => {
+  //   try {
+  //     const exp = watch(`experience.${index}`);
+
+  //     const { data: resumeData } = await axios.get(`/api/resume/${resumeId}`);
+
+  //     const resume = resumeData.data;
+
+  //     const { data } = await axios.post("/api/ai/generate-Experience", {
+  //       jobRole: exp.role,
+  //       experienceLevel: resume.experienceLevel,
+  //     });
+
+  //     setValue(
+  //       `experience.${index}.description`,
+  //       data.data.workExperienceDescription,
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const generateDescription = async (index: number) => {
     try {
       const exp = watch(`experience.${index}`);
 
-      const { data: resumeData } = await axios.get(`/api/resume/${resumeId}`);
+      if (!exp.role?.trim()) {
+        alert("Please enter a job title first.");
+        return;
+      }
 
-      const resume = resumeData.data;
+      const { data: resumeResponse } = await axios.get(
+        `/api/resume/${resumeId}`,
+      );
+
+      const resume = resumeResponse.data.data;
 
       const { data } = await axios.post("/api/ai/generate-Experience", {
         jobRole: exp.role,
-        experienceLevel: resume.experienceLevel,
+        experienceLevel: resume.experienceLevel || "Junior",
+        YearsOfExperience: resume.YearsOfExperience || 1,
+        techStack: resume.skills || [],
       });
 
       setValue(
         `experience.${index}.description`,
         data.data.workExperienceDescription,
+        { shouldDirty: true },
       );
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Generate experience error:",
+          error.response?.data || error.message,
+        );
+      } else {
+        console.error(error);
+      }
     }
   };
 
